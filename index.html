@@ -1,0 +1,521 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="sidd.zst — SUPERUSER | Cyber Security Researcher | BlackArch Linux | UID 0 | Linux · Networking · Ethical Hacking">
+  <meta name="keywords" content="cyber security, ethical hacking, linux, blackarch, networking, portfolio, sidd.zst">
+  <meta name="author" content="Siddharth">
+  <meta name="theme-color" content="#00ff41">
+  <meta name="robots" content="index, follow">
+  <meta property="og:title" content="sidd.zst // SUPERUSER">
+  <meta property="og:description" content="Cyber Security Researcher · BlackArch Linux · Access Level ROOT">
+  <meta property="og:type" content="website">
+  <title>sidd.zst // SUPERUSER</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700;800;900&family=Share+Tech+Mono&family=Rajdhani:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body class="intro-active">
+
+  <!-- ============================================
+       CINEMATIC INTRO OVERLAY
+       ============================================ -->
+  <div id="cinematic" class="cinematic">
+    <!-- Scene canvas for M + ribbons + particles -->
+    <canvas id="intro-canvas"></canvas>
+
+    <!-- Giant M (DOM for crisp typography + CSS lighting) -->
+    <div class="intro-ba-mark" aria-hidden="true">
+      <img src="assets/images/blackarch-logo.png" alt="" class="intro-ba-logo" width="480" height="480" decoding="async">
+    </div>
+    <div id="intro-s-wrap" class="intro-s-wrap">
+      <div id="intro-s" class="intro-s" aria-hidden="true">S</div>
+      <div class="intro-s-glow"></div>
+      <div class="intro-s-reflection"></div>
+    </div>
+
+    <!-- Vignette + film grain during intro -->
+    <div class="intro-vignette"></div>
+    <div class="intro-grain"></div>
+
+    <!-- Fade-to-black layer -->
+    <div id="intro-fade" class="intro-fade"></div>
+  </div>
+
+  <!-- ============================================
+       LINUX BOOT SCREEN
+       ============================================ -->
+  <div id="boot-screen" class="boot-screen hidden">
+    <div class="boot-container">
+      <div class="boot-header">
+        <span class="boot-brand">BLACKARCH</span>
+        <span class="boot-version">KERNEL 6.8.0</span>
+      </div>
+      <div class="boot-log" id="boot-log"></div>
+      <div class="boot-progress-wrap">
+        <div class="boot-progress-label" id="boot-progress-label">SYSTEM INIT</div>
+        <div class="boot-progress">
+          <div class="boot-bar" id="boot-bar"></div>
+        </div>
+        <div class="boot-percent" id="boot-percent">0%</div>
+      </div>
+      <div class="boot-status" id="boot-status"></div>
+    </div>
+  </div>
+
+  <!-- ============================================
+       SUPERUSER REVEAL
+       ============================================ -->
+  <div id="su-reveal" class="su-reveal hidden">
+    <div class="su-content">
+      <h1 class="su-title" id="su-title">sidd.zst</h1>
+      <p class="su-badge" id="su-badge">SUPERUSER</p>
+      <div class="su-tags" id="su-tags">
+        <span>Cyber Security Researcher</span>
+        <span>Linux</span>
+        <span>Networking</span>
+        <span>Ethical Hacking</span>
+        <span>Web Development</span>
+      </div>
+      <button class="su-enter neon-btn" id="enter-system">
+        <span class="btn-text">ENTER SYSTEM</span>
+        <span class="btn-glow"></span>
+      </button>
+    </div>
+    <div class="su-scanline"></div>
+  </div>
+
+  <!-- ============================================
+       MAIN WEBSITE (hidden until ENTER SYSTEM)
+       ============================================ -->
+  <canvas id="matrix-canvas"></canvas>
+  <canvas id="particle-canvas"></canvas>
+  <div class="grid-overlay"></div>
+  <div id="mouse-glow"></div>
+  <div id="cursor" class="custom-cursor"></div>
+  <div id="cursor-trail" class="cursor-trail"></div>
+  <div class="noise-overlay"></div>
+  <div class="scanlines"></div>
+
+  <div id="main-content" class="main-content hidden">
+    <nav class="navbar" id="navbar">
+      <div class="nav-logo" id="logo" title="Click me...">
+        <span class="logo-bracket">[</span>
+        <span class="logo-text">sidd</span>
+        <span class="logo-ext">.zst</span>
+        <span class="logo-bracket">]</span>
+      </div>
+      <ul class="nav-links">
+        <li><a href="#home" class="nav-link" data-section="home">RESUME</a></li>
+        <li><a href="#summary" class="nav-link" data-section="summary">SUMMARY</a></li>
+        <li><a href="#experience" class="nav-link" data-section="experience">EXPERIENCE</a></li>
+        <li><a href="#skills" class="nav-link" data-section="skills">SKILLS</a></li>
+        <li><a href="#projects" class="nav-link" data-section="projects">PROJECTS</a></li>
+        <li><a href="#education" class="nav-link" data-section="education">EDUCATION</a></li>
+        <li><a href="#contact" class="nav-link" data-section="contact">CONTACT</a></li>
+        <li><a href="#terminal-section" class="nav-link terminal-nav" data-section="terminal">TERMINAL</a></li>
+      </ul>
+      <button class="nav-toggle" id="nav-toggle" aria-label="Toggle menu">
+        <span></span><span></span><span></span>
+      </button>
+    </nav>
+
+    <section id="home" class="section home-section">
+      <div class="home-content">
+        <div class="resume-badge-row">
+          <span class="r-badge">UID : 0</span>
+          <span class="r-badge">STATUS : ONLINE</span>
+          <span class="r-badge root">SUPERUSER</span>
+        </div>
+        <div class="home-brand-row">
+          <img src="assets/images/blackarch-logo.png" alt="BlackArch" class="home-ba-logo" width="72" height="72" loading="eager" decoding="async">
+          <div class="glitch-wrapper">
+            <h1 class="main-title glitch" data-text="sidd.zst">sidd.zst</h1>
+          </div>
+        </div>
+        <p class="resume-role">Cyber Security Researcher</p>
+        <p class="subtitle" id="typing-subtitle"></p>
+        <div class="home-tags">
+          <span class="tag">BlackArch Linux</span>
+          <span class="tag">Ethical Hacking</span>
+          <span class="tag">Networking</span>
+          <span class="tag">Web Security</span>
+        </div>
+        <div class="resume-contact-strip glass-card">
+          <a href="mailto:siddharth.tech26@gmail.com" class="rcs-item">siddharth.tech26@gmail.com</a>
+          <span class="rcs-sep">|</span>
+          <a href="https://github.com/siddharthhc" target="_blank" rel="noopener" class="rcs-item">github.com/sid</a>
+          <span class="rcs-sep">|</span>
+          <span class="rcs-item">BlackArch · Lab</span>
+        </div>
+        <div class="home-cta-row">
+          <a href="#summary" class="neon-btn" id="enter-terminal">
+            <span class="btn-text">VIEW RESUME</span>
+            <span class="btn-glow"></span>
+          </a>
+          <a href="#terminal-section" class="neon-btn neon-btn-outline">
+            <span class="btn-text">OPEN TERMINAL</span>
+            <span class="btn-glow"></span>
+          </a>
+        </div>
+        <div class="binary-stream" id="binary-stream"></div>
+      </div>
+      <div class="home-ascii">
+        <pre id="home-ascii"></pre>
+      </div>
+    </section>
+
+    <section id="summary" class="section about-section">
+      <div class="section-header">
+        <span class="section-num">01</span>
+        <h2 class="section-title">SUMMARY<span class="cursor-blink">_</span></h2>
+        <div class="section-line"></div>
+      </div>
+      <div class="about-card glass-card reveal">
+        <div class="about-layout">
+          <div class="about-avatar-wrap">
+            <div class="avatar-ring">
+              <div class="avatar-ring-spin"></div>
+              <div class="avatar-frame">
+                <img src="assets/images/avatar.png" alt="Siddharth" class="about-avatar" width="180" height="180" loading="lazy" decoding="async">
+              </div>
+            </div>
+            <div class="avatar-badge"><span class="status-dot"></span><span>ONLINE</span></div>
+            <div class="su-meta">
+              <div class="su-meta-row"><span class="su-k">ROLE</span><span class="su-v">SUPERUSER</span></div>
+              <div class="su-meta-row"><span class="su-k">UID</span><span class="su-v">0</span></div>
+              <div class="su-meta-row"><span class="su-k">OS</span><span class="su-v">BlackArch</span></div>
+              <div class="su-meta-row"><span class="su-k">STATUS</span><span class="su-v online">ONLINE</span></div>
+            </div>
+          </div>
+          <div class="about-body">
+            <div class="about-header"><span class="about-status">PROFESSIONAL PROFILE</span></div>
+            <h3 class="about-greeting">Hello,</h3>
+            <p class="about-name">I'm <span class="highlight">Siddharth</span>.</p>
+            <p class="about-text">
+              Cyber Security enthusiast focused on understanding how systems work, identifying vulnerabilities, and continuously learning practical defensive and offensive techniques in controlled environments.
+            </p>
+            <p class="about-text">
+              Comfortable with Linux (Arch / BlackArch), networking fundamentals, ethical hacking labs, web technologies, and hands-on problem solving. Learning is driven by building tools, running personal labs, and studying real-world security concepts.
+            </p>
+            <p class="about-text about-belief">
+              Core principle: <span class="highlight">learn by doing</span> — build, break, fix, document.
+            </p>
+            <p class="about-exploring-label">Focus areas:</p>
+            <div class="about-interests">
+              <span class="interest">Linux</span>
+              <span class="interest">Networking</span>
+              <span class="interest">Ethical Hacking</span>
+              <span class="interest">Web Security</span>
+              <span class="interest">System Administration</span>
+              <span class="interest">Always Learning</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="experience" class="section experience-section">
+      <div class="section-header">
+        <span class="section-num">02</span>
+        <h2 class="section-title">EXPERIENCE<span class="cursor-blink">_</span></h2>
+        <div class="section-line"></div>
+      </div>
+      <div class="exp-list">
+        <article class="exp-card glass-card reveal">
+          <div class="exp-header">
+            <div>
+              <h3 class="exp-title">Personal Security Lab · Operator</h3>
+              <p class="exp-org">Self-directed · BlackArch / Virtualization</p>
+            </div>
+            <span class="exp-period">Ongoing</span>
+          </div>
+          <ul class="exp-points">
+            <li>Designed and maintained isolated VM labs for networking, recon, and ethical hacking practice.</li>
+            <li>Daily driver: BlackArch Linux — toolchains for scanning, traffic analysis, and system audit.</li>
+            <li>Documented findings and rebuilt broken environments as part of continuous learning.</li>
+          </ul>
+        </article>
+        <article class="exp-card glass-card reveal">
+          <div class="exp-header">
+            <div>
+              <h3 class="exp-title">Security Tooling &amp; Automation</h3>
+              <p class="exp-org">Independent projects · Python / Bash</p>
+            </div>
+            <span class="exp-period">Active</span>
+          </div>
+          <ul class="exp-points">
+            <li>Built network scanning and recon helpers (sockets, Nmap workflows, service detection).</li>
+            <li>Experimented with WiFi analysis and packet inspection using Scapy / Wireshark in lab only.</li>
+            <li>Automated repetitive lab setup and enumeration tasks with Bash and Python scripts.</li>
+          </ul>
+        </article>
+        <article class="exp-card glass-card reveal">
+          <div class="exp-header">
+            <div>
+              <h3 class="exp-title">Web &amp; Interface Development</h3>
+              <p class="exp-org">Portfolio / terminal UI · HTML · CSS · JS</p>
+            </div>
+            <span class="exp-period">Active</span>
+          </div>
+          <ul class="exp-points">
+            <li>Engineered a seamless, responsive layout ensuring an optimal user experience across all devices..</li>
+            <li>Emphasis on performance, accessibility, and clear presentation of technical skills.</li>
+          </ul>
+        </article>
+      </div>
+    </section>
+
+    <section id="skills" class="section skills-section">
+      <div class="section-header">
+        <span class="section-num">03</span>
+        <h2 class="section-title">SKILLS<span class="cursor-blink">_</span></h2>
+        <div class="section-line"></div>
+      </div>
+      <div class="skills-grid">
+        <div class="skill-card glass-card reveal" data-skill="linux"><div class="skill-icon">$</div><h3>Linux</h3><p>Kernel · Shell · Hardening</p><div class="skill-bar"><div class="skill-fill" style="--level:95%"></div></div></div>
+        <div class="skill-card glass-card reveal" data-skill="net"><div class="skill-icon">⇄</div><h3>Networking</h3><p>TCP/IP · Routing · Firewalls</p><div class="skill-bar"><div class="skill-fill" style="--level:90%"></div></div></div>
+        <div class="skill-card glass-card reveal" data-skill="cyber"><div class="skill-icon">◈</div><h3>Cyber Security</h3><p>Pentest · OSINT · CTF</p><div class="skill-bar"><div class="skill-fill" style="--level:88%"></div></div></div>
+        <div class="skill-card glass-card reveal" data-skill="eh"><div class="skill-icon">*</div><h3>Ethical Hacking</h3><p>Labs · Methodology</p><div class="skill-bar"><div class="skill-fill" style="--level:85%"></div></div></div>
+        <div class="skill-card glass-card reveal" data-skill="py"><div class="skill-icon">π</div><h3>Python</h3><p>Automation · Scanners</p><div class="skill-bar"><div class="skill-fill" style="--level:92%"></div></div></div>
+        <div class="skill-card glass-card reveal" data-skill="js"><div class="skill-icon">{ }</div><h3>JavaScript</h3><p>Frontend · Security</p><div class="skill-bar"><div class="skill-fill" style="--level:85%"></div></div></div>
+        <div class="skill-card glass-card reveal" data-skill="git"><div class="skill-icon">⎇</div><h3>Git &amp; GitHub</h3><p>Version control</p><div class="skill-bar"><div class="skill-fill" style="--level:90%"></div></div></div>
+        <div class="skill-card glass-card reveal" data-skill="bash"><div class="skill-icon">#</div><h3>Bash</h3><p>Scripting · Automation</p><div class="skill-bar"><div class="skill-fill" style="--level:88%"></div></div></div>
+        <div class="skill-card glass-card reveal" data-skill="nmap"><div class="skill-icon">◎</div><h3>Nmap</h3><p>Discovery · Scanning</p><div class="skill-bar"><div class="skill-fill" style="--level:87%"></div></div></div>
+        <div class="skill-card glass-card reveal" data-skill="burp"><div class="skill-icon">⬡</div><h3>Burp Suite</h3><p>Web app testing</p><div class="skill-bar"><div class="skill-fill" style="--level:82%"></div></div></div>
+        <div class="skill-card glass-card reveal" data-skill="wire"><div class="skill-icon">≈</div><h3>Wireshark</h3><p>Packet analysis</p><div class="skill-bar"><div class="skill-fill" style="--level:86%"></div></div></div>
+        <div class="skill-card glass-card reveal" data-skill="msf"><div class="skill-icon">◆</div><h3>Metasploit</h3><p>Lab exploitation</p><div class="skill-bar"><div class="skill-fill" style="--level:80%"></div></div></div>
+        <div class="skill-card glass-card reveal" data-skill="virt"><div class="skill-icon">▣</div><h3>Virtualization</h3><p>Labs · Isolation</p><div class="skill-bar"><div class="skill-fill" style="--level:84%"></div></div></div>
+        <div class="skill-card glass-card reveal" data-skill="arch"><div class="skill-icon">λ</div><h3>Arch Linux</h3><p>Custom builds</p><div class="skill-bar"><div class="skill-fill" style="--level:93%"></div></div></div>
+        <div class="skill-card glass-card reveal" data-skill="ba"><div class="skill-icon">☠</div><h3>BlackArch</h3><p>Security toolkit</p><div class="skill-bar"><div class="skill-fill" style="--level:90%"></div></div></div>
+        <div class="skill-card glass-card reveal" data-skill="term"><div class="skill-icon">&gt;_</div><h3>Terminal</h3><p>Daily workflow</p><div class="skill-bar"><div class="skill-fill" style="--level:96%"></div></div></div>
+        <div class="skill-card glass-card reveal" data-skill="ps"><div class="skill-icon">?</div><h3>Problem Solving</h3><p>CTFs · Debugging</p><div class="skill-bar"><div class="skill-fill" style="--level:91%"></div></div></div>
+      </div>
+    </section>
+
+    <section id="projects" class="section projects-section">
+      <div class="section-header">
+        <span class="section-num">04</span>
+        <h2 class="section-title">PROJECTS<span class="cursor-blink">_</span></h2>
+        <div class="section-line"></div>
+      </div>
+      <div class="projects-grid">
+        <article class="project-card glass-card reveal" data-tilt>
+          <div class="project-glow"></div>
+          <div class="project-header"><span class="project-id">PRJ-001</span><span class="project-status">ACTIVE</span></div>
+          
+          <h3 class="project-title">Linux Lab</h3>
+          <p class="project-desc">Multi-distro lab for kernel experiments, hardening, and sysadmin practice on Arch and BlackArch.</p>
+          <div class="project-tags"><span>Linux</span><span>Arch</span><span>SysAdmin</span></div>
+          <div class="project-actions"><a href="https://github.com/siddharthhc" target="_blank" rel="noopener" class="proj-btn">GitHub</a><a href="#terminal-section" class="proj-btn proj-btn-live">Demo</a></div>
+        </article>
+        <article class="project-card glass-card reveal" data-tilt>
+          <div class="project-glow"></div>
+          <div class="project-header"><span class="project-id">PRJ-002</span><span class="project-status">ACTIVE</span></div>
+         
+          <h3 class="project-title">Network Scanner</h3>
+          <p class="project-desc">Python multi-threaded discovery and port scanner with service detection and banner grabbing.</p>
+          <div class="project-tags"><span>Python</span><span>Sockets</span><span>Nmap</span></div>
+          <div class="project-actions"><a href="https://github.com/siddharthhc" target="_blank" rel="noopener" class="proj-btn">GitHub</a><a href="#terminal-section" class="proj-btn proj-btn-live">Demo</a></div>
+        </article>
+        <article class="project-card glass-card reveal" data-tilt>
+          <div class="project-glow"></div>
+          <div class="project-header"><span class="project-id">PRJ-003</span><span class="project-status">ACTIVE</span></div>
+          
+          <h3 class="project-title">WiFi Security Analysis</h3>
+          <p class="project-desc">Lab toolkit for 802.11 monitoring, rogue AP awareness, and signal mapping.</p>
+          <div class="project-tags"><span>Python</span><span>Scapy</span><span>WiFi</span></div>
+          <div class="project-actions"><a href="https://github.com/siddharthhc" target="_blank" rel="noopener" class="proj-btn">GitHub</a><a href="#terminal-section" class="proj-btn proj-btn-live">Demo</a></div>
+        </article>
+        <article class="project-card glass-card reveal" data-tilt>
+          <div class="project-glow"></div>
+          <div class="project-header"><span class="project-id">PRJ-004</span><span class="project-status">ACTIVE</span></div>
+          
+          <h3 class="project-title">Web Security Toolkit</h3>
+          <p class="project-desc">Scripts and checklists for web testing aligned with Burp-based workflows.</p>
+          <div class="project-tags"><span>Burp</span><span>JS</span><span>Web</span></div>
+          <div class="project-actions"><a href="https://github.com/siddharthhc" target="_blank" rel="noopener" class="proj-btn">GitHub</a><a href="#terminal-section" class="proj-btn proj-btn-live">Demo</a></div>
+        </article>
+        <article class="project-card glass-card reveal" data-tilt>
+          <div class="project-glow"></div>
+          <div class="project-header"><span class="project-id">PRJ-005</span><span class="project-status">ACTIVE</span></div>
+         
+          <h3 class="project-title">System Recon Toolkit</h3>
+          <p class="project-desc">Bash/Python helpers for host enumeration and configuration audit on Linux labs.</p>
+          <div class="project-tags"><span>Bash</span><span>Python</span><span>Recon</span></div>
+          <div class="project-actions"><a href="https://github.com/siddharthhc" target="_blank" rel="noopener" class="proj-btn">GitHub</a><a href="#terminal-section" class="proj-btn proj-btn-live">Demo</a></div>
+        </article>
+        <article class="project-card glass-card reveal" data-tilt>
+          <div class="project-glow"></div>
+          <div class="project-header"><span class="project-id">PRJ-006</span><span class="project-status">LAB</span></div>
+         
+          <h3 class="project-title">Android Pentesting Toolkit</h3>
+          <p class="project-desc">Lab notes and tooling for static review, traffic intercept, and storage checks.</p>
+          <div class="project-tags"><span>Android</span><span>Mobile</span><span>Security</span></div>
+          <div class="project-actions"><a href="https://github.com/siddharthhc" target="_blank" rel="noopener" class="proj-btn">GitHub</a><a href="#terminal-section" class="proj-btn proj-btn-live">Demo</a></div>
+        </article>
+        <article class="project-card glass-card reveal" data-tilt>
+          <div class="project-glow"></div>
+          <div class="project-header"><span class="project-id">PRJ-007</span><span class="project-status">LIVE</span></div>
+         
+          <h3 class="project-title">sidd.zst Resume UI</h3>
+          <p class="project-desc">This interface — cinematic cyberpunk resume with interactive terminal, pure HTML/CSS/JS.</p>
+          <div class="project-tags"><span>HTML</span><span>CSS</span><span>JS</span></div>
+          <div class="project-actions"><a href="https://github.com/siddharthhc" target="_blank" rel="noopener" class="proj-btn">GitHub</a><a href="#home" class="proj-btn proj-btn-live">Live</a></div>
+        </article>
+        <article class="project-card glass-card reveal" data-tilt>
+          <div class="project-glow"></div>
+          <div class="project-header"><span class="project-id">PRJ-008</span><span class="project-status">SOON</span></div>
+          
+          <h3 class="project-title">AI Security Assistant</h3>
+          <p class="project-desc">Planned AI-assisted threat triage and lab automation combining classic defense with ML.</p>
+          <div class="project-tags"><span>Python</span><span>ML</span><span>Security</span></div>
+          <div class="project-actions"><a href="https://github.com/siddharthhc target="_blank" rel="noopener" class="proj-btn">GitHub</a><span class="proj-btn proj-btn-disabled">Soon</span></div>
+        </article>
+      </div>
+    </section>
+
+    <section id="education" class="section timeline-section">
+      <div class="section-header">
+        <span class="section-num">05</span>
+        <h2 class="section-title">EDUCATION<span class="cursor-blink">_</span></h2>
+        <div class="section-line"></div>
+      </div>
+      <div class="timeline">
+        <div class="timeline-item reveal"><div class="timeline-marker"></div><div class="timeline-content glass-card"><span class="timeline-year">01</span><h3>Explored Linux</h3><p>Open-source systems as a continuous learning surface.</p></div></div>
+        <div class="timeline-item reveal"><div class="timeline-marker"></div><div class="timeline-content glass-card"><span class="timeline-year">02</span><h3>Multiple distributions</h3><p>Ubuntu, Fedora, Debian — install, break, recover, repeat.</p></div></div>
+        <div class="timeline-item reveal"><div class="timeline-marker"></div><div class="timeline-content glass-card"><span class="timeline-year">03</span><h3>Terminal fluency</h3><p>Shell as primary interface — pipelines, permissions, processes.</p></div></div>
+        <div class="timeline-item reveal"><div class="timeline-marker"></div><div class="timeline-content glass-card"><span class="timeline-year">04</span><h3>Arch Linux</h3><p>Minimal base, documentation-first, full system control.</p></div></div>
+        <div class="timeline-item reveal"><div class="timeline-marker"></div><div class="timeline-content glass-card"><span class="timeline-year">05</span><h3>BlackArch Linux</h3><p>Security-focused daily driver for labs and research workflows.</p></div></div>
+        <div class="timeline-item reveal"><div class="timeline-marker"></div><div class="timeline-content glass-card"><span class="timeline-year">06</span><h3>Networking</h3><p>TCP/IP, routing, Wireshark, isolated virtual networks.</p></div></div>
+        <div class="timeline-item reveal"><div class="timeline-marker"></div><div class="timeline-content glass-card"><span class="timeline-year">07</span><h3>Web technologies</h3><p>Browser, server, protocols — and where trust boundaries leak.</p></div></div>
+        <div class="timeline-item reveal"><div class="timeline-marker"></div><div class="timeline-content glass-card"><span class="timeline-year">08</span><h3>Cyber security path</h3><p>Threats, defenses, ethical methodology in controlled labs.</p></div></div>
+        <div class="timeline-item reveal"><div class="timeline-marker"></div><div class="timeline-content glass-card"><span class="timeline-year">09</span><h3>Ethical hacking labs</h3><p>CTFs and permissioned testing with a clear learning goal.</p></div></div>
+        <div class="timeline-item reveal"><div class="timeline-marker"></div><div class="timeline-content glass-card"><span class="timeline-year">NEXT</span><h3>Goal: Cyber Security Researcher</h3><p>Deeper research, tooling, and contributing practical knowledge.</p></div></div>
+      </div>
+    </section>
+
+    <section id="contact" class="section contact-section">
+      <div class="section-header">
+        <span class="section-num">06</span>
+        <h2 class="section-title">CONTACT<span class="cursor-blink">_</span></h2>
+        <div class="section-line"></div>
+      </div>
+
+      <form class="contact-form glass-card reveal" id="contact-form" action="https://formsubmit.co/siddharth.tech26@gmail.com" method="POST" novalidate>
+        <input type="hidden" name="_subject" value="sidd.zst — New contact / project request">
+        <input type="hidden" name="_template" value="table">
+        <input type="hidden" name="_captcha" value="false">
+        <input type="text" name="_honey" style="display:none" tabindex="-1" autocomplete="off">
+        <div class="cf-grid">
+          <div class="cf-field">
+            <label for="cf-name">FULL NAME</label>
+            <input type="text" id="cf-name" name="name" placeholder="John Smith" autocomplete="name" required>
+          </div>
+          <div class="cf-field">
+            <label for="cf-phone">PHONE NUMBER</label>
+            <input type="tel" id="cf-phone" name="phone" placeholder="+91 00000 00000" autocomplete="tel">
+          </div>
+          <div class="cf-field cf-full">
+            <label for="cf-email">EMAIL ADDRESS</label>
+            <input type="email" id="cf-email" name="email" placeholder="you@example.com" autocomplete="email" required>
+          </div>
+          <div class="cf-field cf-full">
+            <label for="cf-msg">TELL ME ABOUT YOUR SELF</label>
+            <textarea id="cf-msg" name="message" rows="4" placeholder="Describe your idea, goals, and timeline..." required></textarea>
+          </div>
+        </div>
+        <button type="submit" class="cf-submit" id="cf-submit">
+          <span class="cf-submit-text">Initialize Project</span>
+          <span class="cf-submit-icon" aria-hidden="true">↗</span>
+        </button>
+        <p class="cf-note">Submissions are emailed to <strong>siddharth.tech26@gmail.com</strong>. First send may need inbox confirmation.</p>
+      </form>
+
+      <div class="contact-grid">
+        <a href="https://github.com/siddharthhc" target="_blank" rel="noopener" class="contact-card glass-card reveal">
+          <div class="contact-icon"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/></svg></div>
+          <h3>GitHub</h3>
+          <p>@sid</p>
+        </a>
+        <div class="contact-card glass-card reveal" id="email-card">
+          <div class="contact-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg></div>
+          <h3>Email</h3>
+          <p id="email-text">siddharth.tech26@gmail.com</p>
+          <button type="button" class="copy-btn" id="copy-email">COPY</button>
+        </div>
+        <a href="https://www.instagram.com/_sukuna_ryomen_0/" target="_blank" rel="noopener" class="contact-card glass-card reveal">
+          <div class="contact-icon"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg></div>
+          <h3>Instagram</h3>
+          <p>@sid</p>
+        </a>
+      </div>
+    </section>
+
+    <section id="terminal-section" class="section terminal-section">
+      <div class="section-header">
+        <span class="section-num">07</span>
+        <h2 class="section-title">TERMINAL<span class="cursor-blink">_</span></h2>
+        <div class="section-line"></div>
+      </div>
+      <div class="terminal-window glass-card">
+        <div class="terminal-titlebar">
+          <div class="terminal-dots">
+            <span class="dot red"></span>
+            <span class="dot yellow"></span>
+            <span class="dot green"></span>
+          </div>
+          <span class="terminal-title">sid@LINUX: ~</span>
+          <div class="terminal-controls">
+            <button class="term-btn" id="term-clear" title="Clear">CLR</button>
+          </div>
+        </div>
+        <div class="terminal-body" id="terminal-body">
+          <div class="terminal-output" id="terminal-output"></div>
+          <div class="terminal-input-line">
+            <span class="prompt">sid@LINUX:~$</span>
+            <input type="text" id="terminal-input" class="terminal-input" autocomplete="off" spellcheck="false">
+            <span class="input-cursor"></span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <footer class="footer">
+      <div class="footer-content">
+        <div class="footer-left">
+          <span class="access-level">Access Level : <span class="root">SUPERUSER</span></span>
+        </div>
+        <div class="footer-center">
+          <span class="footer-logo">© sidd.zst</span>
+        </div>
+        <div class="footer-right">
+          <span class="footer-status" id="footer-clock"></span>
+        </div>
+      </div>
+      <div class="footer-bar"></div>
+    </footer>
+  </div>
+
+  <!-- SECRET EASTER EGG TERMINAL -->
+  <div id="secret-terminal" class="secret-terminal hidden">
+    <div class="secret-header">
+      <span>UNAUTHORIZED ACCESS DETECTED — OVERRIDE ACTIVE</span>
+      <button id="close-secret" class="close-secret">×</button>
+    </div>
+    <div class="secret-body" id="secret-body">
+      <div class="secret-output" id="secret-output"></div>
+      <div class="secret-input-line">
+        <span class="prompt secret-prompt">root@sid:~#</span>
+        <input type="text" id="secret-input" class="terminal-input" autocomplete="off" spellcheck="false">
+      </div>
+    </div>
+  </div>
+
+  <div id="toast" class="toast"></div>
+
+  <script src="script.js"></script>
+</body>
+</html>
