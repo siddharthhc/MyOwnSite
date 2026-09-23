@@ -134,9 +134,44 @@ body:not(.intro-active) .cursor-trail { opacity: 0.55; }
   justify-content: center;
   z-index: 5;
   pointer-events: none;
-  transform-style: preserve-3d;
-  perspective: 1400px;
-  will-change: transform, opacity;
+}
+
+/* print("Welcome") — pure black, clean terminal style */
+.intro-welcome {
+  font-family: var(--font-mono);
+  font-size: clamp(1.5rem, 5.5vw, 2.85rem);
+  letter-spacing: 0.04em;
+  color: var(--green);
+  text-shadow:
+    0 0 8px rgba(0, 255, 65, 0.55),
+    0 0 28px rgba(0, 255, 65, 0.2);
+  opacity: 0;
+  transform: scale(0.97);
+  transition: opacity 0.7s var(--ease-out-expo), transform 0.7s var(--ease-out-expo);
+  white-space: nowrap;
+  line-height: 1.2;
+}
+.intro-welcome.visible {
+  opacity: 1;
+  transform: scale(1);
+}
+.intro-welcome.fade-out {
+  opacity: 0;
+  transform: scale(1.02);
+  transition: opacity 0.65s ease, transform 0.65s ease;
+}
+.intro-welcome-prompt {
+  color: #00e5ff;
+  text-shadow: 0 0 10px rgba(0, 229, 255, 0.45);
+}
+.intro-welcome-text {
+  color: var(--green);
+}
+.intro-welcome-cursor {
+  color: var(--green);
+  animation: blink 0.85s step-end infinite;
+  margin-left: 1px;
+  text-shadow: 0 0 8px var(--green-glow);
 }
 
 .intro-s {

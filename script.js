@@ -47,316 +47,39 @@
      ============================================ */
   class CinematicIntro {
     constructor() {
-      this.canvas = $('#intro-canvas');
-      this.ctx = this.canvas.getContext('2d');
-      this.mEl = $('#intro-s');
-      this.mWrap = $('#intro-s-wrap');
-      this.mGlow = $('.intro-s-glow');
-      this.mRefl = $('.intro-s-reflection');
-      this.baMark = $('.intro-ba-mark');
+      this.welcomeEl = $('#intro-welcome');
+      this.welcomeText = $('#intro-welcome-text');
       this.fade = $('#intro-fade');
       this.cinematic = $('#cinematic');
-      this.w = 0;
-      this.h = 0;
-      this.ribbons = [];
-      this.particles = [];
-      this.phase = 0;
-      this.progress = 0;
-      this.camZ = 0;
-      this.blur = 0;
-      this.running = false;
-      this.raf = null;
     }
-
-    resize() {
-      // Cap DPR on mobile — full retina canvas kills mid-range phones during intro
-      this.dpr = PERF.mobile ? 1 : Math.min(devicePixelRatio || 1, 2);
-      const cssW = window.innerWidth;
-      const cssH = window.innerHeight;
-      this.w = this.canvas.width = Math.floor(cssW * this.dpr);
-      this.h = this.canvas.height = Math.floor(cssH * this.dpr);
-      this.canvas.style.width = cssW + 'px';
-      this.canvas.style.height = cssH + 'px';
-      this.ctx.setTransform(this.dpr, 0, 0, this.dpr, 0, 0);
-      this.cssW = cssW;
-      this.cssH = cssH;
-    }
-
-    createRibbons(count = PERF.mobile ? 6 : 14) {
-      this.ribbons = [];
-      for (let i = 0; i < count; i++) {
-        const pts = [];
-        const segs = 24;
-        const baseAngle = (i / count) * Math.PI * 2;
-        for (let s = 0; s < segs; s++) {
-          const t = s / (segs - 1);
-          const r = 40 + t * 280 + Math.sin(t * 6 + i) * 30;
-          pts.push({
-            x: Math.cos(baseAngle + t * 1.2) * r,
-            y: Math.sin(baseAngle + t * 0.8) * r * 0.7,
-            z: t * 800 - 200,
-          });
-        }
-        this.ribbons.push({
-          pts,
-          hue: 120 + (i % 5) * 8,
-          alpha: 0.15 + Math.random() * 0.35,
-          width: 1.5 + Math.random() * 2.5,
-          speed: 0.3 + Math.random() * 0.7,
-          offset: Math.random() * Math.PI * 2,
-        });
-      }
-    }
-
-    createParticles(count = PERF.mobile ? 28 : 90) {
-      this.particles = [];
-      for (let i = 0; i < count; i++) {
-        this.particles.push({
-          x: (Math.random() - 0.5) * 900,
-          y: (Math.random() - 0.5) * 600,
-          z: Math.random() * 1000 - 200,
-          vx: (Math.random() - 0.5) * 0.4,
-          vy: (Math.random() - 0.5) * 0.4,
-          vz: 1.5 + Math.random() * 3,
-          size: 0.8 + Math.random() * 2.2,
-          alpha: 0.2 + Math.random() * 0.6,
-        });
-      }
-    }
-
-    project(x, y, z) {
-      const fov = 450;
-      const scale = fov / (fov + z - this.camZ);
-      const cw = this.cssW || this.w / (this.dpr || 1);
-      const ch = this.cssH || this.h / (this.dpr || 1);
-      return {
-        x: cw / 2 + x * scale,
-        y: ch / 2 + y * scale,
-        s: scale,
-      };
-    }
-
-    drawRibbons(time) {
-      const ctx = this.ctx;
-      for (const rib of this.ribbons) {
-        ctx.beginPath();
-        let first = true;
-        for (let i = 0; i < rib.pts.length; i++) {
-          const p = rib.pts[i];
-          const wave = Math.sin(time * 0.001 * rib.speed + rib.offset + i * 0.3) * 12;
-          const proj = this.project(p.x + wave, p.y + wave * 0.5, p.z);
-          if (proj.s <= 0) continue;
-          if (first) {
-            ctx.moveTo(proj.x, proj.y);
-            first = false;
-          } else {
-            ctx.lineTo(proj.x, proj.y);
-          }
-        }
-        const a = rib.alpha * Math.min(1, this.progress * 2);
-        ctx.strokeStyle = 'hsla(' + rib.hue + ', 100%, 55%, ' + a + ')';
-        ctx.lineWidth = rib.width * (0.5 + this.progress);
-        if (!PERF.mobile) {
-          ctx.shadowColor = 'hsla(' + rib.hue + ', 100%, 50%, ' + (a * 0.8) + ')';
-          ctx.shadowBlur = 12 + this.blur * 20;
-        }
-        ctx.stroke();
-        ctx.shadowBlur = 0;
-      }
-    }
-
-    drawParticles() {
-      const ctx = this.ctx;
-      for (const p of this.particles) {
-        if (this.phase >= 3) {
-          p.z -= p.vz * (1 + this.progress * 2.2);
-          p.x += p.vx;
-          p.y += p.vy;
-          if (p.z < -200) {
-            p.z = 900 + Math.random() * 200;
-            p.x = (Math.random() - 0.5) * 900;
-            p.y = (Math.random() - 0.5) * 600;
-          }
-        }
-        const proj = this.project(p.x, p.y, p.z);
-        if (proj.s <= 0) continue;
-        const size = p.size * proj.s * (0.5 + this.progress);
-        const a = p.alpha * Math.min(1, this.progress * 1.5);
-        ctx.beginPath();
-        ctx.arc(proj.x, proj.y, Math.max(0.3, size), 0, Math.PI * 2);
-        ctx.fillStyle = 'rgba(0, 255, 65, ' + a + ')';
-        ctx.fill();
-        if (!PERF.mobile && size > 1.5) {
-          ctx.beginPath();
-          ctx.arc(proj.x, proj.y, size * 2.5, 0, Math.PI * 2);
-          ctx.fillStyle = 'rgba(0, 255, 65, ' + (a * 0.15) + ')';
-          ctx.fill();
-        }
-      }
-    }
-
-    drawLightStreaks(time) {
-      if (this.phase < 2) return;
-      if (PERF.mobile && this.progress < 0.2) return;
-      const ctx = this.ctx;
-      const cx = (this.cssW || this.w / (this.dpr || 1)) / 2;
-      const cy = (this.cssH || this.h / (this.dpr || 1)) / 2;
-      const count = PERF.mobile
-        ? 3 + Math.floor(this.progress * 4)
-        : 8 + Math.floor(this.progress * 12);
-      for (let i = 0; i < count; i++) {
-        const angle = (i / count) * Math.PI * 2 + time * 0.0003;
-        const len = 80 + this.progress * 400 + Math.sin(time * 0.002 + i) * 40;
-        const x1 = cx + Math.cos(angle) * 20;
-        const y1 = cy + Math.sin(angle) * 15;
-        const x2 = cx + Math.cos(angle) * len;
-        const y2 = cy + Math.sin(angle) * len * 0.65;
-        const grad = ctx.createLinearGradient(x1, y1, x2, y2);
-        const a = 0.08 + this.progress * 0.25;
-        grad.addColorStop(0, 'rgba(0, 255, 80, ' + a + ')');
-        grad.addColorStop(0.5, 'rgba(0, 255, 100, ' + (a * 0.4) + ')');
-        grad.addColorStop(1, 'rgba(0, 255, 65, 0)');
-        ctx.beginPath();
-        ctx.moveTo(x1, y1);
-        ctx.lineTo(x2, y2);
-        ctx.strokeStyle = grad;
-        ctx.lineWidth = 1.5 + this.progress * 3;
-        if (!PERF.mobile) {
-          ctx.shadowColor = 'rgba(0, 255, 65, 0.5)';
-          ctx.shadowBlur = 8 + this.blur * 15;
-        }
-        ctx.stroke();
-        ctx.shadowBlur = 0;
-      }
-    }
-
-    loop = (time) => {
-      if (!this.running) return;
-      const ctx = this.ctx;
-      const vw = this.cssW || this.w / (this.dpr || 1);
-      const vh = this.cssH || this.h / (this.dpr || 1);
-
-      // Cheaper clear on mobile (less residual blur trail)
-      const trail = PERF.mobile ? 0.22 : (0.12 + this.blur * 0.15);
-      ctx.fillStyle = 'rgba(0, 0, 0, ' + trail + ')';
-      ctx.fillRect(0, 0, vw, vh);
-
-      this.drawRibbons(time);
-      this.drawLightStreaks(time);
-      this.drawParticles();
-
-      if (this.phase >= 2 && !PERF.mobile) {
-        const g = ctx.createRadialGradient(vw / 2, vh / 2, 0, vw / 2, vh / 2, 200 + this.progress * 300);
-        g.addColorStop(0, 'rgba(0, 255, 65, ' + (0.04 + this.progress * 0.08) + ')');
-        g.addColorStop(1, 'rgba(0, 0, 0, 0)');
-        ctx.fillStyle = g;
-        ctx.fillRect(0, 0, vw, vh);
-      }
-
-      this.raf = requestAnimationFrame(this.loop);
-    };
 
     async run() {
-      this.resize();
-      window.addEventListener('resize', () => this.resize());
-      this.createRibbons();
-      this.createParticles();
-      this.running = true;
-      this.raf = requestAnimationFrame(this.loop);
-
-      // Scene 1 — pure black
       const mobile = PERF.mobile || PERF.reduced;
-      this.phase = 0;
-      await sleep(mobile ? 500 : 900);
 
-      // Scene 2 — S appears
-      this.phase = 1;
-      this.mEl.classList.add('visible');
-      if (this.baMark) this.baMark.classList.add('visible');
-      this.mGlow.style.opacity = mobile ? '0.4' : '0.65';
-      this.mRefl.style.opacity = mobile ? '0' : '0.4';
-      await sleep(mobile ? 700 : 1200);
+      // Pure black — nothing behind
+      await sleep(mobile ? 350 : 550);
 
-      // Scene 3 — S comes alive
-      this.phase = 2;
-      this.mEl.classList.add('alive');
-      this.progress = 0.12;
-      await sleep(mobile ? 600 : 1200);
+      if (this.welcomeEl) this.welcomeEl.classList.add('visible');
 
-      // Scene 4–5 — closer + orbit behind
-      this.phase = 3;
-      this.mEl.classList.add('orbiting');
-      const orbitDuration = mobile ? 2400 : 3800;
-      const start = performance.now();
+      // Type: print("Welcome")
+      const full = 'print("Welcome")';
+      if (this.welcomeText) {
+        this.welcomeText.textContent = '';
+        for (let i = 0; i < full.length; i++) {
+          this.welcomeText.textContent += full[i];
+          await sleep(mobile ? 50 : 60);
+        }
+      }
 
-      await new Promise((resolve) => {
-        const animateOrbit = (now) => {
-          const t = Math.min(1, (now - start) / orbitDuration);
-          // ease-out — accelerates into the behind-pass
-          const e = 1 - Math.pow(1 - t, 2.4);
+      await sleep(mobile ? 1000 : 1500);
 
-          this.progress = 0.15 + e * 0.85;
-          this.camZ = e * 480;
-          this.blur = e * 0.45;
-
-          // A: S comes nearer (front) · B: hard orbit left → behind
-          let yaw, scale, zPush, xDrift, pitch;
-          if (e < 0.32) {
-            const a = e / 0.32;
-            yaw = -22 * a;
-            scale = 1 + a * 2.8;
-            zPush = a * 160;
-            xDrift = -24 * a;
-            pitch = 3 * a;
-          } else {
-            const b = (e - 0.32) / 0.68;
-            const bE = 1 - Math.pow(1 - b, 1.7);
-            yaw = -22 + 195 * bE;   // end ~ +173° (clearly behind)
-            scale = 3.8 + bE * 4.5;
-            zPush = 160 + bE * 240;
-            xDrift = -24 + 36 * bE;
-            pitch = 3 - 8 * bE;
-          }
-
-          // Keep S sharp until we are behind; soft fade only at the end
-          const opacity = e < 0.78 ? 1 : 1 - Math.pow((e - 0.78) / 0.22, 1.25);
-          const blurPx = e > 0.85 ? (e - 0.85) * 8 : 0;
-
-          this.mWrap.style.transform =
-            'translateX(' + xDrift + 'px) translateZ(' + zPush + 'px) ' +
-            'rotateY(' + yaw + 'deg) rotateX(' + pitch + 'deg)';
-
-          this.mEl.style.transform = 'scale(' + scale + ')';
-          this.mEl.style.opacity = String(Math.max(0, opacity));
-          this.mEl.style.filter = blurPx > 0 ? 'blur(' + blurPx + 'px)' : 'none';
-          this.mGlow.style.opacity = String(0.65 * Math.max(0, 1 - e * 0.8));
-          this.mRefl.style.opacity = String(0.35 * Math.max(0, 1 - e * 1.15));
-          if (this.baMark) {
-            // Stay fixed in place — only fade out as camera passes the S
-            const baOp = e < 0.55
-              ? (PERF.mobile ? 0.4 : 0.55)
-              : Math.max(0, (PERF.mobile ? 0.4 : 0.55) * (1 - (e - 0.55) / 0.45));
-            this.baMark.style.opacity = String(baOp);
-          }
-
-          if (t < 1) {
-            requestAnimationFrame(animateOrbit);
-          } else {
-            resolve();
-          }
-        };
-        requestAnimationFrame(animateOrbit);
-      });
-
-      // Scene 6 — fade to black
-      this.phase = 5;
+      // Fade out
       this.fade.classList.add('active');
-      await sleep(1000);
+      if (this.welcomeEl) this.welcomeEl.classList.add('fade-out');
+      await sleep(800);
 
-      this.running = false;
-      cancelAnimationFrame(this.raf);
       this.cinematic.classList.add('done');
-      await sleep(350);
+      await sleep(250);
     }
   }
 

@@ -12,6 +12,10 @@
   <meta property="og:title" content="sidd.zst // SUPERUSER">
   <meta property="og:description" content="Cyber Security Researcher · BlackArch Linux · Access Level ROOT">
   <meta property="og:type" content="website">
+
+  <meta property="og:image" content="https://siddharth-sh-five.vercel.app/assets/images/siddharth-sidd-zst-siddharth-blackarch.jpg">
+  <meta property="og:image:alt" content="Siddharth- Cyber Security and Linux enthusiast">
+
   <title>Siddharth | Cyber Security Researcher & Ethical Hacker </title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -20,27 +24,22 @@
   <link rel="stylesheet" href="style.css">
 </head>
 <body class="intro-active">
+  <img
+  src="/assets/images/siddharth-sidd-zst-siddharth-blackarch.jpg"
+  alt="Siddharth sidd zst - Cyber Security and Linux enthusiast"
+  width="800"
+  height="800">
 
   <!-- ============================================
        CINEMATIC INTRO OVERLAY
        ============================================ -->
   <div id="cinematic" class="cinematic">
-    <!-- Scene canvas for M + ribbons + particles -->
-    <canvas id="intro-canvas"></canvas>
-
-    <!-- Giant M (DOM for crisp typography + CSS lighting) -->
-    <div class="intro-ba-mark" aria-hidden="true">
-      <img src="assets/images/blackarch-logo.png" alt="" class="intro-ba-logo" width="480" height="480" decoding="async">
-    </div>
+    <!-- Clean welcome only — pure black, no logo / particles behind -->
     <div id="intro-s-wrap" class="intro-s-wrap">
-      <div id="intro-s" class="intro-s" aria-hidden="true">S</div>
-      <div class="intro-s-glow"></div>
-      <div class="intro-s-reflection"></div>
+      <div id="intro-welcome" class="intro-welcome" aria-hidden="true">
+        <span class="intro-welcome-prompt">&gt;&gt;&gt; </span><span id="intro-welcome-text" class="intro-welcome-text"></span><span class="intro-welcome-cursor">_</span>
+      </div>
     </div>
-
-    <!-- Vignette + film grain during intro -->
-    <div class="intro-vignette"></div>
-    <div class="intro-grain"></div>
 
     <!-- Fade-to-black layer -->
     <div id="intro-fade" class="intro-fade"></div>
