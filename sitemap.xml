@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+        xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">
+  <url>
+    <loc>https://siddharth-sh-five.vercel.app/</loc>
+    <changefreq>weekly</changefreq>
+    <priority>1.0</priority>
+  </url>
+  <url>
+    <loc>https://siddharth-sh-five.vercel.app/photos.html</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+    <image:image>
+      <image:loc>https://siddharth-sh-five.vercel.app/assets/images/google/siddharth-zst.png</image:loc>
+      <image:title>Siddharth (sidd.zst) — Cyber Security Researcher</image:title>
+      <image:caption>Siddharth sidd.zst official photo</image:caption>
+    </image:image>
+    <image:image>
+      <image:loc>https://siddharth-sh-five.vercel.app/assets/images/google/siddharth-lab.png</image:loc>
+      <image:title>Siddharth sidd.zst — security lab</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://siddharth-sh-five.vercel.app/assets/images/google/siddharth-work.png</image:loc>
+      <image:title>Siddharth sidd.zst — work</image:title>
+    </image:image>
+  </url>
+</urlset>

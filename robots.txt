@@ -1,0 +1,6 @@
+User-agent: *
+Allow: /
+Allow: /assets/images/google/
+Disallow: /assets/images/avatar.png
+
+Sitemap: https://siddharth-sh-five.vercel.app/sitemap.xml
